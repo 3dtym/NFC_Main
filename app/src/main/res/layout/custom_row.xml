@@ -17,7 +17,7 @@
         android:id="@+id/foodName"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:gravity="left|center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         />
@@ -25,24 +25,23 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
-    <TextView
-        android:id="@+id/buyLabel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:padding="8dp"
-        />
-    <TextView
-        android:id="@+id/foodPrice"
-        android:textColor="#11AA11"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:padding="8dp"
-        />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/foodPrice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:padding="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <ImageView
+            android:id="@+id/buyIcon"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/shoppingcart" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -13,11 +13,11 @@ import java.util.List;
 
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
-    private List<String> data;//todo: change list from string to foodItem
+    private List<Product> data;
     private Listener listener;
     private int selectedPosition = 0;
 
-    public CustomAdapter(List<String> data, Listener listener) {
+    public CustomAdapter(List<Product> data, Listener listener) {
         this.data = data;
         this.listener = listener;
     }
@@ -31,9 +31,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.foodName.setText(data.get(position));
-        holder.foodPrice.setText( Integer.toString(position) + "€");
-        holder.buyLabel.setText("Buy!");
+        holder.foodName.setText(data.get(position).nazov);
+        holder.foodPrice.setText( data.get(position).cena + "€");
+        switch(data.get(position).picture) {
+            case 1:
+                holder.foodImage.setImageResource(R.drawable.water);
+            case 2:
+                holder.foodImage.setImageResource(R.drawable.snack);
+            default:
+                holder.foodImage.setImageResource(R.drawable.food);
+        }
     }
 
     @Override
@@ -42,20 +49,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
     public interface Listener{
-        void onSelected(String string);
+        void onSelected(Product product);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView foodName;
         private TextView foodPrice;
-        private TextView buyLabel;
         private ImageView foodImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
             foodName = itemView.findViewById(R.id.foodName);
             foodPrice = itemView.findViewById(R.id.foodPrice);
-            buyLabel = itemView.findViewById(R.id.buyLabel);
             foodImage = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(selectSender);
         }
@@ -64,7 +69,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 selectedPosition = getLayoutPosition();
-                String itemData = data.get(selectedPosition);
+                Product itemData = data.get(selectedPosition);
                 listener.onSelected(itemData);
             }
         };

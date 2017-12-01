@@ -1,11 +1,16 @@
 package com.example.tim.nfcshop;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,17 +23,22 @@ import java.util.List;
 
 
 public class ShoppingCart extends Activity{
-    String user;
-    double credit;
+    User user;
+    List<Product> products;
+    Double price;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        List<String> foods = getFoods();
-        user = getUser();
-        credit = 100.0;
+
+        products = new LinkedList<>();
+        products.add(new Product("Water",2,1));
+        products.add(new Product("Snickers",2,2));
+        products.add(new Product("Hot-dog",2,0));
+
+        user = new User("Test",200,0);
 
         setContentView(R.layout.activity_shopping);
 
@@ -38,36 +48,116 @@ public class ShoppingCart extends Activity{
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        CustomAdapter adapter = new CustomAdapter(foods, new AdapterListener());
+        CustomAdapter adapter = new CustomAdapter(products, new AdapterListener());
         recyclerView.setAdapter(adapter);
 
         TextView usernameView = findViewById(R.id.usename);
-        usernameView.setText(user);
+        usernameView.setText(user.getMeno());
         TextView creditView = findViewById(R.id.credit);
-        creditView.setText(Double.toString(credit) + "€");
+        creditView.setText(Double.toString(user.getKredit()) + "€");
+        ImageView logoutButton = findViewById(R.id.logout);
+        logoutButton.setOnClickListener(close);
+
     }
 
     private class AdapterListener implements CustomAdapter.Listener {
         @Override
-        public void onSelected(String data) {
-            Toast.makeText(getApplicationContext(),data,Toast.LENGTH_SHORT).show();
-
+        public void onSelected(Product data) {
+            price = data.getCena();
+            double balance = (user.getKredit()-data.getCena());
+            if(balance<0.0) {
+                Toast.makeText(getApplicationContext(),"Not enough credit!",Toast.LENGTH_LONG);
+            }
+            else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                builder.setMessage("Buy " + data.getNazov() + " for " + data.getCena() + "€ (new balance will be " + balance + "€).").setPositiveButton("Yes", payDialog)
+                        .setNegativeButton("No", payDialog).show();
+            }
         }
     }
 
+    private View.OnClickListener close = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+            builder.setMessage("Do you want to log out?").setPositiveButton("Yes", logoutDialog)
+                    .setNegativeButton("No", logoutDialog).show();
+        }
+    };
 
-    private List<String> getFoods(){
-        List<String> foods = new LinkedList<>();
-        foods.add("Minaral water");
-        foods.add("Coffe");
-        foods.add("Hot-dog");
-        foods.add("Hamburger");
-        foods.add("Cola");
-        foods.add("Choco-snack");
-        return foods;
+    private void logout(){
+        user = null;
+        finish();
     }
 
-    private String getUser(){
-        return "testUser";
+    DialogInterface.OnClickListener logoutDialog = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    logout();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    break;
+            }
+        }
+    };
+
+    DialogInterface.OnClickListener payDialog = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    user.setKredit(user.getKredit()-price);
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    break;
+            }
+        }
+    };
+
+    public static final long LOGOUT_TIMEOUT = 30000; // 30s
+
+    private Handler logoutHandler = new Handler(){
+        public void handleMessage(Message msg) {
+        }
+    };
+
+    private Runnable logoutCallback = new Runnable() {
+        @Override
+        public void run() {
+            logout();
+        }
+    };
+
+    public void resetLogoutTimer(){
+        logoutHandler.removeCallbacks(logoutCallback);
+        logoutHandler.postDelayed(logoutCallback, LOGOUT_TIMEOUT);
     }
+
+    public void stopLogoutTimer(){
+        logoutHandler.removeCallbacks(logoutCallback);
+    }
+
+    @Override
+    public void onUserInteraction(){
+        resetLogoutTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resetLogoutTimer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopLogoutTimer();
+    }
+
 }
