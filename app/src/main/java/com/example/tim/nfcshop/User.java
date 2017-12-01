@@ -7,13 +7,16 @@ package com.example.tim.nfcshop;
 public class User {
     int userId;
     String meno;
-    int kredit;
-    int isAdmin;
+    double kredit;
+    int isAsmin;
+    int cardId;
 
-    public User(String meno, int kredit, int isAsmin) {
+    public User(int userId, String meno, double kredit, int isAsmin, int cardId) {
+        this.userId = userId;
         this.meno = meno;
         this.kredit = kredit;
-        this.isAdmin = isAsmin;
+        this.isAsmin = isAsmin;
+        this.cardId = cardId;
     }
 
     public User() {
@@ -35,19 +38,27 @@ public class User {
         this.meno = meno;
     }
 
-    public int getKredit() {
+    public double getKredit() {
         return kredit;
     }
 
-    public void setKredit(int kredit) {
+    public void setKredit(double kredit) {
         this.kredit = kredit;
     }
 
-    public int getIsAdmin() {
-        return isAdmin;
+    public int getIsAsmin() {
+        return isAsmin;
     }
 
-    public void setIsAdmin(int isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setIsAsmin(int isAsmin) {
+        this.isAsmin = isAsmin;
+    }
+
+    public int getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
     }
 }
