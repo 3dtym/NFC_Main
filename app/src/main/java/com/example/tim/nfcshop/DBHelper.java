@@ -144,7 +144,7 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public Cursor getCustomerNfcID(String name){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + "ID" + " FROM " + CUSTOMERS_TABLE_NAME +
+        String query = "SELECT customerId FROM " + CUSTOMERS_TABLE_NAME +
                 " WHERE " + CUSTOMERS_COLUMN_NAME + " = '" + name + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
