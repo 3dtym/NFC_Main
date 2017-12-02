@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,13 +67,13 @@ public class MainActivity extends AppCompatActivity {
             registerUser(db,id);
         }
         else if(db.isAdmin(id) == 1){
-            Toast.makeText(this,
-                    "admin!",
-                    Toast.LENGTH_LONG).show();
-        }else
-            Toast.makeText(this,
-                    "uziv!",
-                    Toast.LENGTH_LONG).show();
+            Intent intent2 = new Intent(getApplicationContext(), AdminActivity.class);
+            startActivity(intent2);
+        }else {
+            Intent intent2 = new Intent(getApplicationContext(), ShoppingCart.class);
+            startActivity(intent2);
+        }
+
     }
 
     @Override
