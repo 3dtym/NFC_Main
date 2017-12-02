@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight">
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:background="@color/Indigo">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,12 +13,13 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="62dp"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/food"
-        android:layout_weight="0.08" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="62dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.08"
+            android:background="@color/Indigo"
+            app:srcCompat="@drawable/food" />
 
         <TextView
             android:id="@+id/foodName"
@@ -25,6 +27,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="left|center"
+            android:background="@color/Indigo"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
 
@@ -33,15 +36,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="right|center"
             android:padding="5dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#11AA11" />
+            android:background="@color/Indigo"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <ImageView
             android:id="@+id/buyIcon"
             android:layout_width="63dp"
             android:layout_height="match_parent"
+            android:background="@color/Indigo"
             app:srcCompat="@drawable/shoppingcart" />
 
     </LinearLayout>

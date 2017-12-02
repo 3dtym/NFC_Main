@@ -90,7 +90,9 @@ public class ShoppingCart extends Activity{
             double balance = Double.valueOf(twoDForm.format(user.getKredit()-data.getCena()));
 
             if( balance < 0.0) {
-                Toast.makeText(ShoppingCart.this,"Not enough credit!",Toast.LENGTH_LONG).show();
+                //Toast.makeText(ShoppingCart.this,"Not enough credit!",Toast.LENGTH_LONG).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCart.this);
+                builder.setMessage("Not enough credit!").setNegativeButton("Ok", payDialog).show();
             }
             else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCart.this);
