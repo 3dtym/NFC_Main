@@ -60,7 +60,7 @@ public class UserAdmFrg extends Fragment {
         LayoutInflater linf = LayoutInflater.from(getContext());
         final View inflator = linf.inflate(R.layout.edit_dialog, null);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("User edit");
 
         builder.setView(inflator);
@@ -85,10 +85,10 @@ public class UserAdmFrg extends Fragment {
 
             }
         });
-        builder.setNegativeButton("canel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+                db.deleteUser(id);
             }
         });
         AlertDialog ad = builder.create();

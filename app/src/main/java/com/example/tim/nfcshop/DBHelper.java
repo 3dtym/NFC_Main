@@ -183,7 +183,7 @@ public class DBHelper extends SQLiteOpenHelper {
     void updateUser(String id, String name, double credit){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + CUSTOMERS_TABLE_NAME + " SET " + CUSTOMERS_COLUMN_NAME +
-                " = '" + name + "', " + CUSTOMERS_COLUMN_CREDIT + " = '" + credit + "' WHERE cardID = '"+ id +"'";
+                " = '" + name + "', " + CUSTOMERS_COLUMN_CREDIT + " = '" + credit + "' WHERE " + CUSTOMERS_COLUMN_ID + " = '" + id +"'";
         db.execSQL(query);
     }
 
@@ -208,15 +208,11 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * Delete from database
      * @param id
-     * @param name
      */
-    public void deleteName(int id, String name){
+    public void deleteUser(String id){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + CUSTOMERS_TABLE_NAME + " WHERE "
-                + "ID" + " = '" + id + "'" +
-                " AND " + CUSTOMERS_COLUMN_NAME + " = '" + name + "'";
-        Log.d(TAG, "deleteName: query: " + query);
-        Log.d(TAG, "deleteName: Deleting " + name + " from database.");
+                + CUSTOMERS_COLUMN_CARD_ID + " = '" + id + "'";
         db.execSQL(query);
     }
 }
