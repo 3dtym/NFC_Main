@@ -41,7 +41,7 @@ public class EditDataActivity extends AppCompatActivity {
         selectedID = receivedIntent.getIntExtra("id",-1); //NOTE: -1 is just the default value
 
         //now get the name we passed as an extra
-        selectedName = receivedIntent.getStringExtra("name");
+        selectedName = mDatabaseHelper.geNameByID(selectedID);
 
         //set the text to show the current selected name
         editable_item.setText(selectedName);

@@ -104,6 +104,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return users;
     }
+    public String geNameByID(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT customerName FROM " + CUSTOMERS_TABLE_NAME +
+                " WHERE " + CUSTOMERS_COLUMN_ID + " = '" + id + "'";
+        Cursor data = db.rawQuery(query, null);
+        String name = "null";
+        while(data.moveToNext()) {
+             name = data.getString(0);
+        }
+        return name;
+    }
 
     public ArrayList<User> getUsersByID(int id){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -145,9 +156,26 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getCustomerNfcID(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT customerId FROM " + CUSTOMERS_TABLE_NAME +
-                " WHERE " + CUSTOMERS_COLUMN_NAME + " = '" + name + "'";
+                " WHERE " + CUSTOMERS_COLUMN_ID + " = '" + name + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
+    }
+    /**
+     * Returns only the ID that matches the name passed in
+     * @param IDcko
+     * @return
+     */
+    public Boolean getAdmin(String IDcko){
+        Boolean admin = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + CUSTOMERS_TABLE_NAME +
+                " WHERE " + CUSTOMERS_COLUMN_ID + " = '" + IDcko + "' AND ADMIN = 1 ";
+        Cursor data = db.rawQuery(query, null);
+        if (data.moveToNext()) {
+            admin = true;
+        }
+        return admin;
     }
 
     /**

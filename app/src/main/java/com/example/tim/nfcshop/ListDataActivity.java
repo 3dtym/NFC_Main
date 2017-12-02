@@ -39,35 +39,29 @@ public class ListDataActivity extends AppCompatActivity {
         //get the data and append to a list
         ArrayList<User> users = mDatabaseHelper.getAllUsers();
         ArrayList<String> listData = new ArrayList<>();
+        final ArrayList<Integer> listID = new ArrayList<>();
         for (int i = 0; i< users.size(); i++){
             //get the value from the database in column 1
             //then add it to the ArrayList
-            listData.add("ID: " + users.get(i).getUserId() + " Meno: " + users.get(i).getMeno()+ " Kredit: " + users.get(i).getKredit()+ " NFC ID: " + users.get(i).getCardId());
+            Integer idcko = users.get(i).getUserId();
+            listData.add("ID: " + idcko + " Meno: " + users.get(i).getMeno()+ " Kredit: " + users.get(i).getKredit()+ " NFC ID: " + users.get(i).getCardId());
+            listID.add(idcko);
         }
         //create the list adapter and set the adapter
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         mListView.setAdapter(adapter);
 
-        //set an onItemClickListener to the ListView
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String name = adapterView.getItemAtPosition(i).toString();
                 Log.d(TAG, "onItemClick: You Clicked on " + name);
-
-                ArrayList<User> users = mDatabaseHelper.getUsersByID(1); //get the id associated with that name
-                int itemID = -1;
-                double f = mDatabaseHelper.getCreditUser(1);
-                if(users.size()>0){
+                    Integer itemID = listID.get(i);
                     Log.d(TAG, "onItemClick: The ID is: " + itemID);
                     Intent editScreenIntent = new Intent(ListDataActivity.this, EditDataActivity.class);
-                    //editScreenIntent.putExtra("id",itemID);
-                    //editScreenIntent.putExtra("name",name);
+                    editScreenIntent.putExtra("id",itemID);
                     startActivity(editScreenIntent);
-                }
-                else{
-                    toastMessage("No ID associated with that name");
-                }
+
             }
         });
     }
