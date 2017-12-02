@@ -2,6 +2,7 @@ package com.example.tim.nfcshop;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -16,6 +19,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private List<Product> data;
     private Listener listener;
     private int selectedPosition = 0;
+    private boolean asc = false;
+    private static final String TAG = "TAG";
 
     public CustomAdapter(List<Product> data, Listener listener) {
         this.data = data;
@@ -32,7 +37,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.foodName.setText(data.get(position).nazov);
-        holder.foodPrice.setText( data.get(position).cena + "€");
+        holder.foodPrice.setText(data.get(position).cena + "€");
         switch(data.get(position).picture) {
             case 1:
                 holder.foodImage.setImageResource(R.drawable.water);
@@ -68,7 +73,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             foodPrice = itemView.findViewById(R.id.foodPrice);
             foodImage = itemView.findViewById(R.id.imageView);
             buyImage = itemView.findViewById(R.id.buyIcon);
-            itemView.setOnClickListener(selectSender);
+            buyImage.setOnClickListener(selectSender);
         }
 
         private View.OnClickListener selectSender = new View.OnClickListener() {
@@ -77,18 +82,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 selectedPosition = getLayoutPosition();
                 Product itemData = data.get(selectedPosition);
                 listener.onSelected(itemData);
-            }
-        };
-
-
-
-        /*
-        private View.OnClickListener deleteSender = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
             }
         };
-        */
+
+
     }
 }

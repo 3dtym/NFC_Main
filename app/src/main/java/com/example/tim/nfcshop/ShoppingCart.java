@@ -27,10 +27,10 @@ import java.util.List;
 
 
 public class ShoppingCart extends Activity{
-    User user;
-    List<Product> products;
-    Double price;
-    TextView creditView;
+    private User user;
+    private List<Product> products;
+    private Double price;
+    private TextView creditView;
 
     private static final String TAG = "TAG";
 
@@ -98,6 +98,7 @@ public class ShoppingCart extends Activity{
                         .setNegativeButton("No", payDialog).show();
             }
         }
+
     }
 
     private View.OnClickListener close = new View.OnClickListener() {
