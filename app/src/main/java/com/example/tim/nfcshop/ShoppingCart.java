@@ -9,14 +9,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,7 +34,7 @@ public class ShoppingCart extends Activity{
         products.add(new Product("Snickers",2,2));
         products.add(new Product("Hot-dog",2,0));
 
-        user = new User("Test",200,0);
+        user = new User(0,"jna",5.3,1,"3b");
 
         setContentView(R.layout.activity_shopping);
 

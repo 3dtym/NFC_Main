@@ -9,9 +9,9 @@ public class User {
     String meno;
     double kredit;
     int isAsmin;
-    int cardId;
+    String cardId;
 
-    public User(int userId, String meno, double kredit, int isAsmin, int cardId) {
+    public User(int userId, String meno, double kredit, int isAsmin, String cardId) {
         this.userId = userId;
         this.meno = meno;
         this.kredit = kredit;
@@ -54,11 +54,11 @@ public class User {
         this.isAsmin = isAsmin;
     }
 
-    public int getCardId() {
+    public String getCardId() {
         return cardId;
     }
 
-    public void setCardId(int cardId) {
+    public void setCardId(String cardId) {
         this.cardId = cardId;
     }
 }

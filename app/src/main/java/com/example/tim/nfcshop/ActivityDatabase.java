@@ -49,7 +49,7 @@ public class ActivityDatabase extends AppCompatActivity {
                 }
                 if(newUser.getMeno()!=null){
                     newUser.setIsAsmin(7);
-                    newUser.setCardId(3534958);
+                    newUser.setCardId("3534958");
                     AddData(newUser);
                 }
 

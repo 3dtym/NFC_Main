@@ -40,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + CUSTOMERS_TABLE_NAME + "("+ CUSTOMERS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 CUSTOMERS_COLUMN_NAME +" TEXT, "+ CUSTOMERS_COLUMN_CREDIT + " DOUBLE, " + CUSTOMERS_COLUMN_ADMIN+
-                " INTEGER, " + CUSTOMERS_COLUMN_CARD_ID + " INTEGER" + ")";
+                " INTEGER, " + CUSTOMERS_COLUMN_CARD_ID + " TEXT " + ")";
         String createTable2 = "CREATE TABLE " + PRODUCTS_TABLE_NAME + "(" + PRODUCTS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 PRODUCTS_COLUMN_NAME +" TEXT, " + PRODUCTS_COLUMN_PRICE + " DOUBLE, " + PRODUCTS_COLUMN_PICTURE + " INTEGER" + ")";
         db.execSQL(createTable);
@@ -82,7 +82,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<User> users = new ArrayList<>();
         User user=null;
         while(data.moveToNext()){
-            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Double.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), Integer.valueOf(data.getString(4)));
+            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Double.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), data.getString(4));
             users.add(user);
             user = null;
         }
@@ -97,7 +97,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<User> users = new ArrayList<>();
         User user=null;
         while(data.moveToNext()){
-            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Integer.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), Integer.valueOf(data.getString(4)));
+            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Integer.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), data.getString(4));
             users.add(user);
             user = null;
         }
@@ -113,7 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<User> users = new ArrayList<>();
         User user=null;
         while(data.moveToNext()){
-            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Integer.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), Integer.valueOf(data.getString(4)));
+            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Integer.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), data.getString(4));
             users.add(user);
             user = null;
         }
@@ -129,7 +129,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<User> users = new ArrayList<>();
         User user=null;
         while(data.moveToNext()){
-            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Integer.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), Integer.valueOf(data.getString(4)));
+            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Integer.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), data.getString(4));
             users.add(user);
             user = null;
         }
