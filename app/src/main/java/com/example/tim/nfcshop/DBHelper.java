@@ -11,9 +11,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "Db.db";
+    public static final String DATABASE_NAME = "Databaza.db";
     public static final String CUSTOMERS_TABLE_NAME = "contacts";
     public static final String PRODUCTS_TABLE_NAME = "products";
 
@@ -21,6 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CUSTOMERS_COLUMN_NAME = "customerName";
     public static final String CUSTOMERS_COLUMN_CREDIT = "credit";
     public static final String CUSTOMERS_COLUMN_ADMIN = "admin";
+    public static final String CUSTOMERS_COLUMN_CARD_ID = "cardId";
 
     public static final String PRODUCTS_COLUMN_ID = "productId";
     public static final String PRODUCTS_COLUMN_NAME = "productName";
@@ -35,10 +38,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE IF NOT EXISTS " + CUSTOMERS_TABLE_NAME + "("+ CUSTOMERS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                CUSTOMERS_COLUMN_NAME +" TEXT, "+ CUSTOMERS_COLUMN_CREDIT + " INTEGER, " + CUSTOMERS_COLUMN_ADMIN +" INTEGER" + ")";
-        String createTable2 = "CREATE TABLE IF NOT EXISTS " + PRODUCTS_TABLE_NAME + "(" + PRODUCTS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                PRODUCTS_COLUMN_NAME +" TEXT, " + PRODUCTS_COLUMN_PRICE + " INTEGER, " + PRODUCTS_COLUMN_PICTURE + " INTEGER" + ")";
+        String createTable = "CREATE TABLE " + CUSTOMERS_TABLE_NAME + "("+ CUSTOMERS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                CUSTOMERS_COLUMN_NAME +" TEXT, "+ CUSTOMERS_COLUMN_CREDIT + " DOUBLE, " + CUSTOMERS_COLUMN_ADMIN+
+                " INTEGER, " + CUSTOMERS_COLUMN_CARD_ID + " TEXT " + ")";
+        String createTable2 = "CREATE TABLE " + PRODUCTS_TABLE_NAME + "(" + PRODUCTS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                PRODUCTS_COLUMN_NAME +" TEXT, " + PRODUCTS_COLUMN_PRICE + " DOUBLE, " + PRODUCTS_COLUMN_PICTURE + " INTEGER" + ")";
         db.execSQL(createTable);
         db.execSQL(createTable2);
     }
@@ -56,7 +60,8 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(CUSTOMERS_COLUMN_NAME, user.getMeno());
         contentValues.put(CUSTOMERS_COLUMN_CREDIT, user.getKredit());
-        contentValues.put(CUSTOMERS_COLUMN_ADMIN, 0);
+        contentValues.put(CUSTOMERS_COLUMN_ADMIN, user.getIsAsmin());
+        contentValues.put(CUSTOMERS_COLUMN_CARD_ID, user.getCardId());
 
         Log.d(TAG, "addData: Adding " + user.getMeno() + "with credit " + user.getKredit() + " to " + CUSTOMERS_TABLE_NAME);
 
@@ -70,11 +75,66 @@ public class DBHelper extends SQLiteOpenHelper {
      * Returns all the data from database
      * @return
      */
-    public Cursor getData(){
+    public ArrayList<User> getAllUsers(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + CUSTOMERS_TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
-        return data;
+        ArrayList<User> users = new ArrayList<>();
+        User user=null;
+        while(data.moveToNext()){
+            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Double.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), data.getString(4));
+            users.add(user);
+            user = null;
+        }
+
+        return users;
+    }
+    public ArrayList<User> getUsersByName(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT *" + " FROM " + CUSTOMERS_TABLE_NAME +
+                " WHERE " + CUSTOMERS_COLUMN_NAME + " LIKE '%" + name + "%'";
+        Cursor data = db.rawQuery(query, null);
+        ArrayList<User> users = new ArrayList<>();
+        User user=null;
+        while(data.moveToNext()){
+            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Integer.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), data.getString(4));
+            users.add(user);
+            user = null;
+        }
+
+        return users;
+    }
+
+    public ArrayList<User> getUsersByID(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT *" + " FROM " + CUSTOMERS_TABLE_NAME +
+                " WHERE " + CUSTOMERS_COLUMN_ID + " = '" + id + "'";
+        Cursor data = db.rawQuery(query, null);
+        ArrayList<User> users = new ArrayList<>();
+        User user=null;
+        while(data.moveToNext()){
+            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Integer.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), data.getString(4));
+            users.add(user);
+            user = null;
+        }
+
+        return users;
+    }
+
+    public ArrayList<User> getUserByNfcId(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT *" + " FROM " + CUSTOMERS_TABLE_NAME +
+                " WHERE " + CUSTOMERS_COLUMN_CARD_ID + " = '" + id + "'";
+        Cursor data = db.rawQuery(query, null);
+        ArrayList<User> users = new ArrayList<>();
+        User user=null;
+        while(data.moveToNext()){
+            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Integer.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), data.getString(4));
+            users.add(user);
+            user = null;
+        }
+
+        return users;
     }
 
     /**
@@ -82,7 +142,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param name
      * @return
      */
-    public Cursor getItemID(String name){
+    public Cursor getCustomerNfcID(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT customerId FROM " + CUSTOMERS_TABLE_NAME +
                 " WHERE " + CUSTOMERS_COLUMN_NAME + " = '" + name + "'";
@@ -96,7 +156,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param id
      * @param oldName
      */
-    public void updateName(String newName, int id, String oldName){
+    public void updateNameUser(String newName, int id, String oldName){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + CUSTOMERS_TABLE_NAME + " SET " + CUSTOMERS_COLUMN_NAME +
                 " = '" + newName + "' WHERE " + "ID" + " = '" + id + "'" +
@@ -104,6 +164,31 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d(TAG, "updateName: query: " + query);
         Log.d(TAG, "updateName: Setting name to " + newName);
         db.execSQL(query);
+    }
+
+    public void updateCreditUser(int id, double newKredit){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + CUSTOMERS_TABLE_NAME + " SET " + CUSTOMERS_COLUMN_CREDIT +
+                " = '" + newKredit + "' WHERE " + CUSTOMERS_COLUMN_ID + " = '" + id + "'";
+        db.execSQL(query);
+    }
+
+    public double getCreditUser(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + CUSTOMERS_COLUMN_CREDIT + " FROM "+ CUSTOMERS_TABLE_NAME + " WHERE " + CUSTOMERS_COLUMN_ID + " = '" + id + "'";
+        Cursor data = db.rawQuery(query, null);
+        data.moveToNext();
+        return data.getDouble(0);
+    }
+
+    int isAdmin(String id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + CUSTOMERS_COLUMN_ADMIN + " FROM "+ CUSTOMERS_TABLE_NAME + " WHERE " + CUSTOMERS_COLUMN_CARD_ID + " = '" + id + "'";
+        Cursor data = db.rawQuery(query, null);
+        if(!data.moveToNext())
+            return -1;
+        else
+            return data.getInt(0);
     }
 
     /**

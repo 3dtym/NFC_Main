@@ -51,7 +51,7 @@ public class EditDataActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String item = editable_item.getText().toString();
                 if(!item.equals("")){
-                    mDatabaseHelper.updateName(item,selectedID,selectedName);
+                    mDatabaseHelper.updateCreditUser(1,7);
                 }else{
                     toastMessage("You must enter a name");
                 }

@@ -8,10 +8,10 @@ public class Product {
 
     int produktId;
     String nazov;
-    int cena;
+    double cena;
     int picture;
 
-    public Product(String nazov, int cena, int picture) {
+    public Product(String nazov, double cena, int picture) {
         this.nazov = nazov;
         this.cena = cena;
         this.picture = picture;
@@ -36,7 +36,7 @@ public class Product {
         this.nazov = nazov;
     }
 
-    public int getCena() {
+    public double getCena() {
         return cena;
     }
 
