@@ -2,14 +2,17 @@ package com.example.tim.nfcshop;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -26,6 +29,8 @@ public class ShoppingCart extends Activity{
     User user;
     List<Product> products;
     Double price;
+    TextView creditView;
+
 
 
     @Override
@@ -34,9 +39,9 @@ public class ShoppingCart extends Activity{
 
 
         products = new LinkedList<>();
-        products.add(new Product("Water",1,1));
-        products.add(new Product("Snickers",0,2));
-        products.add(new Product("Hot-dog",2,0));
+        products.add(new Product("Water",0.99,1));
+        products.add(new Product("Snickers",1.25,2));
+        products.add(new Product("Hot-dog",1.50,0));
 
         user = new User("Test",200.0,0,"012165464");
 
@@ -53,10 +58,11 @@ public class ShoppingCart extends Activity{
 
         TextView usernameView = findViewById(R.id.usename);
         usernameView.setText(user.getMeno());
-        TextView creditView = findViewById(R.id.credit);
+        creditView = findViewById(R.id.credit);
         creditView.setText(Double.toString(user.getKredit()) + "€");
         ImageView logoutButton = findViewById(R.id.logout);
         logoutButton.setOnClickListener(close);
+        logoutButton.setImageResource(R.drawable.logout);
 
     }
 
@@ -70,7 +76,7 @@ public class ShoppingCart extends Activity{
             }
             else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCart.this);
-                builder.setMessage("Buy " + data.getNazov() + " for " + data.getCena() + "€ (new balance will be " + balance + "€).").setPositiveButton("Yes", payDialog)
+                builder.setMessage("Do you want to purchase " + data.getNazov() + " for " + data.getCena() + "€\n(balance after purchase: " + balance + "€).").setPositiveButton("Yes", payDialog)
                         .setNegativeButton("No", payDialog).show();
             }
         }
@@ -111,6 +117,7 @@ public class ShoppingCart extends Activity{
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
                     user.setKredit(user.getKredit()-price);
+                    creditView.setText(Double.toString(user.getKredit()) + "€");
                     //todo:update database
                     break;
 

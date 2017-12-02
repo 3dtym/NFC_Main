@@ -44,6 +44,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 holder.foodImage.setImageResource(R.drawable.food);
                 break;
         }
+        holder.buyImage.setImageResource(R.drawable.shoppingcart);
     }
 
     @Override
@@ -59,12 +60,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         private TextView foodName;
         private TextView foodPrice;
         private ImageView foodImage;
+        private ImageView buyImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
             foodName = itemView.findViewById(R.id.foodName);
             foodPrice = itemView.findViewById(R.id.foodPrice);
             foodImage = itemView.findViewById(R.id.imageView);
+            buyImage = itemView.findViewById(R.id.buyIcon);
             itemView.setOnClickListener(selectSender);
         }
 
