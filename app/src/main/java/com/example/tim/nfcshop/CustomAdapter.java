@@ -36,10 +36,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         switch(data.get(position).picture) {
             case 1:
                 holder.foodImage.setImageResource(R.drawable.water);
+                break;
             case 2:
                 holder.foodImage.setImageResource(R.drawable.snack);
+                break;
             default:
                 holder.foodImage.setImageResource(R.drawable.food);
+                break;
         }
     }
 

@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
         textViewInfo = (TextView)findViewById(R.id.info);
 
 
-        nfcReader = new NfcReader(this);
+        //nfcReader = new NfcReader(this);
 
-        nfcReader.getNfc();
+        //nfcReader.getNfc();
 
         ImageView img = (ImageView) findViewById(R.id.imageView);
         img.setOnClickListener(
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        nfcReader.enableNfc();
+        //nfcReader.enableNfc();//
     }
 
     @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        nfcReader.disableNFC();
+        //nfcReader.disableNFC();//
     }
 
     private void registerUser(final DBHelper db, final String id){

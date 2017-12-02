@@ -34,11 +34,11 @@ public class ShoppingCart extends Activity{
 
 
         products = new LinkedList<>();
-        products.add(new Product("Water",2,1));
-        products.add(new Product("Snickers",2,2));
+        products.add(new Product("Water",1,1));
+        products.add(new Product("Snickers",0,2));
         products.add(new Product("Hot-dog",2,0));
 
-        user = new User("Test",200,0);
+        user = new User("Test",200.0,0,"012165464");
 
         setContentView(R.layout.activity_shopping);
 
@@ -69,7 +69,7 @@ public class ShoppingCart extends Activity{
                 Toast.makeText(getApplicationContext(),"Not enough credit!",Toast.LENGTH_LONG);
             }
             else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCart.this);
                 builder.setMessage("Buy " + data.getNazov() + " for " + data.getCena() + "€ (new balance will be " + balance + "€).").setPositiveButton("Yes", payDialog)
                         .setNegativeButton("No", payDialog).show();
             }
@@ -79,7 +79,7 @@ public class ShoppingCart extends Activity{
     private View.OnClickListener close = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCart.this);
             builder.setMessage("Do you want to log out?").setPositiveButton("Yes", logoutDialog)
                     .setNegativeButton("No", logoutDialog).show();
         }
@@ -111,6 +111,7 @@ public class ShoppingCart extends Activity{
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
                     user.setKredit(user.getKredit()-price);
+                    //todo:update database
                     break;
 
                 case DialogInterface.BUTTON_NEGATIVE:
