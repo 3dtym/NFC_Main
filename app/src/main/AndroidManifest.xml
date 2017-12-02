@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.tim.nfcshop">
+
     <uses-permission android:name="android.permission.NFC"/>
-    <uses-feature android:name="android.hardware.nfc"
-                  android:required="false"/>
+
+    <uses-feature
+            android:name="android.hardware.nfc"
+            android:required="false"/>
 
     <application
             android:allowBackup="true"
@@ -18,19 +21,21 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <!--<intent-filter>-->
-                <!--<action android:name="android.nfc.action.TAG_DISCOVERED"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT"/>-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.nfc.action.TAG_DISCOVERED"/> -->
+            <!-- <category android:name="android.intent.category.DEFAULT"/> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".ShoppingCart">
-
         </activity>
         <activity android:name=".ActivityDatabase"/>
         <activity android:name=".EditDataActivity"/>
         <activity android:name=".ListDataActivity"/>
-
-
+        <activity
+                android:name=".AdminActivity"
+                android:label="@string/title_activity_admin"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
