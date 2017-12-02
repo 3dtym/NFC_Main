@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class ShoppingCart extends Activity{
     Double price;
     TextView creditView;
 
+    private static final String TAG = "TAG";
 
 
     @Override
@@ -42,8 +44,21 @@ public class ShoppingCart extends Activity{
         products.add(new Product("Water",0.99,1));
         products.add(new Product("Snickers",1.25,2));
         products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
+        products.add(new Product("Hot-dog",1.50,0));
 
-        user = new User("Test",200.0,0,"012165464");
+
+        user = new User("Test",5.0,0,"012165464");
 
         setContentView(R.layout.activity_shopping);
 
@@ -70,9 +85,12 @@ public class ShoppingCart extends Activity{
         @Override
         public void onSelected(Product data) {
             price = data.getCena();
-            double balance = (user.getKredit()-data.getCena());
-            if(balance<0.0) {
-                Toast.makeText(getApplicationContext(),"Not enough credit!",Toast.LENGTH_LONG);
+
+            DecimalFormat twoDForm = new DecimalFormat("#.##");
+            double balance = Double.valueOf(twoDForm.format(user.getKredit()-data.getCena()));
+
+            if( balance < 0.0) {
+                Toast.makeText(ShoppingCart.this,"Not enough credit!",Toast.LENGTH_LONG).show();
             }
             else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCart.this);
@@ -116,7 +134,8 @@ public class ShoppingCart extends Activity{
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
-                    user.setKredit(user.getKredit()-price);
+                    DecimalFormat twoDForm = new DecimalFormat("#.##");
+                    user.setKredit(Double.valueOf(twoDForm.format(user.getKredit()-price)));
                     creditView.setText(Double.toString(user.getKredit()) + "€");
                     //todo:update database
                     break;
