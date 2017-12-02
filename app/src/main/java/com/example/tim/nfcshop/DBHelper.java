@@ -160,44 +160,30 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
-    /**
-     * Returns only the ID that matches the name passed in
-     * @param IDcko
-     * @return
-     */
-    public Boolean getAdmin(String IDcko){
-        Boolean admin = false;
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String query = "SELECT * FROM " + CUSTOMERS_TABLE_NAME +
-                " WHERE " + CUSTOMERS_COLUMN_ID + " = '" + IDcko + "' AND ADMIN = 1 ";
-        Cursor data = db.rawQuery(query, null);
-        if (data.moveToNext()) {
-            admin = true;
-        }
-        return admin;
-    }
 
     /**
      * Updates the name field
-     * @param newName
      * @param id
-     * @param oldName
+     * @param name
      */
-    public void updateNameUser(String newName, int id, String oldName){
+    public void updateNameUser(String id, String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + CUSTOMERS_TABLE_NAME + " SET " + CUSTOMERS_COLUMN_NAME +
-                " = '" + newName + "' WHERE " + "ID" + " = '" + id + "'" +
-                " AND " + CUSTOMERS_COLUMN_NAME + " = '" + oldName + "'";
-        Log.d(TAG, "updateName: query: " + query);
-        Log.d(TAG, "updateName: Setting name to " + newName);
+                " = '" + name + "' WHERE " + CUSTOMERS_COLUMN_CARD_ID + " = '" + id + "'";
         db.execSQL(query);
     }
 
-    public void updateCreditUser(int id, double newKredit){
+    public void updateCreditUser(String id, double newKredit){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + CUSTOMERS_TABLE_NAME + " SET " + CUSTOMERS_COLUMN_CREDIT +
-                " = '" + newKredit + "' WHERE " + CUSTOMERS_COLUMN_ID + " = '" + id + "'";
+                " = '" + newKredit + "' WHERE " + CUSTOMERS_COLUMN_CARD_ID + " = '" + id + "'";
+        db.execSQL(query);
+    }
+
+    void updateUser(String id, String name, double credit){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + CUSTOMERS_TABLE_NAME + " SET " + CUSTOMERS_COLUMN_NAME +
+                " = '" + name + "', " + CUSTOMERS_COLUMN_CREDIT + " = '" + credit + "' WHERE cardID = '"+ id +"'";
         db.execSQL(query);
     }
 

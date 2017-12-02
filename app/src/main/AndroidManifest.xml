@@ -29,8 +29,6 @@
         <activity android:name=".ShoppingCart">
         </activity>
         <activity android:name=".ActivityDatabase"/>
-        <activity android:name=".EditDataActivity"/>
-        <activity android:name=".ListDataActivity"/>
         <activity
                 android:name=".AdminActivity"
                 android:label="@string/title_activity_admin"
