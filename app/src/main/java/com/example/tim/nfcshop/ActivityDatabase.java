@@ -42,12 +42,14 @@ public class ActivityDatabase extends AppCompatActivity {
                 }
                 if (editText2.length() != 0) {
                     //s tym ze k tomuto by mal mat pristup iba admin nerobim kontrolu na to ci to je naozaj int
-                    newUser.setKredit(Integer.valueOf(editText2.getText().toString()));
+                    newUser.setKredit(Double.valueOf(editText2.getText().toString()));
                     editText2.setText("");
                 } else {
                     toastMessage("You must put amount in the credit field!");
                 }
                 if(newUser.getMeno()!=null){
+                    newUser.setIsAsmin(7);
+                    newUser.setCardId(3534958);
                     AddData(newUser);
                 }
 
