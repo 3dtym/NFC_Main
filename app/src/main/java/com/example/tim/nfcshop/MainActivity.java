@@ -1,12 +1,12 @@
 package com.example.tim.nfcshop;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,17 +52,53 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //       nfcReader.enableNfc();
+        nfcReader.enableNfc();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
-        textViewInfo.setText(nfcReader.getTag(intent));
+        final String id = nfcReader.getTag(intent);
+        textViewInfo.setText(id);
+        final DBHelper db = new DBHelper(this);
+        if(db.isAdmin(id) == -1){
+            registerUser(db,id);
+        }
+        else if(db.isAdmin(id) == 1){
+            Toast.makeText(this,
+                    "admin!",
+                    Toast.LENGTH_LONG).show();
+        }else
+            Toast.makeText(this,
+                    "uziv!",
+                    Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        nfcReader.disableNFC();
+        nfcReader.disableNFC();
+    }
+
+    private void registerUser(final DBHelper db, final String id){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("User registration");
+        final EditText input = new EditText(this);
+        input.setHint("Zadaj svoje meno");
+        builder.setView(input);
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String name = input.getText().toString();
+                db.createUserDB(new User(name,10.0,1,id));
+            }
+        });
+        builder.setNegativeButton("canel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog ad = builder.create();
+        ad.show();
     }
 }

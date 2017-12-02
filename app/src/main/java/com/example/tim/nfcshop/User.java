@@ -11,11 +11,17 @@ public class User {
     int isAsmin;
     String cardId;
 
-    public User(int userId, String meno, double kredit, int isAsmin, String cardId) {
+    public User(String meno, double kredit, int isAdmin, String cardId) {
+        this.meno = meno;
+        this.kredit = kredit;
+        this.isAsmin = isAdmin;
+        this.cardId = cardId;
+    }
+    public User(int userId,String meno, double kredit, int isAdmin, String cardId) {
         this.userId = userId;
         this.meno = meno;
         this.kredit = kredit;
-        this.isAsmin = isAsmin;
+        this.isAsmin = isAdmin;
         this.cardId = cardId;
     }
 

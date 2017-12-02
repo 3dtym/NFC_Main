@@ -181,6 +181,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return data.getDouble(0);
     }
 
+    int isAdmin(String id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + CUSTOMERS_COLUMN_ADMIN + " FROM "+ CUSTOMERS_TABLE_NAME + " WHERE " + CUSTOMERS_COLUMN_CARD_ID + " = '" + id + "'";
+        Cursor data = db.rawQuery(query, null);
+        if(!data.moveToNext())
+            return -1;
+        else
+            return data.getInt(0);
+    }
+
     /**
      * Delete from database
      * @param id

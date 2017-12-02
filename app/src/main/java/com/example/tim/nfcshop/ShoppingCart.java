@@ -34,7 +34,7 @@ public class ShoppingCart extends Activity{
         products.add(new Product("Snickers",2,2));
         products.add(new Product("Hot-dog",2,0));
 
-        user = new User(0,"jna",5.3,1,"3b");
+        user = new User("jna",5.3,1,"3b");
 
         setContentView(R.layout.activity_shopping);
 
