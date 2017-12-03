@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
         textViewInfo = (TextView)findViewById(R.id.info);
 
 
-//        nfcReader = new NfcReader(this);
+        nfcReader = new NfcReader(this);
 
-//        nfcReader.getNfc();
+        nfcReader.getNfc();
 
         ImageView img = (ImageView) findViewById(R.id.imageView);
         img.setOnClickListener(
@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), ShoppingCart.class);
                         intent.putExtra("NFC_ID", "58c283a1600");
                         startActivity(intent);
-
                     }
                 }
         );
@@ -51,10 +50,6 @@ public class MainActivity extends AppCompatActivity {
                         ActivityDatabase.class);
                 startActivity(myIntent);
 
-//      Ak chces vyskusat moje Admin rozhranie odkomentuj toto a zakomentuj horne. Bolo by dobre keby si mal nieco v databaze.
-//                Intent myIntent = new Intent(MainActivity.this,
-//                        AdminActivity.class);
-//                startActivity(myIntent);
             }
         });
     }
@@ -62,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        nfcReader.enableNfc();//
+        nfcReader.enableNfc();//
     }
 
     @Override
@@ -87,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-//        nfcReader.disableNFC();//
+        nfcReader.disableNFC();//
     }
 
     private void registerUser(final DBHelper db, final String id){

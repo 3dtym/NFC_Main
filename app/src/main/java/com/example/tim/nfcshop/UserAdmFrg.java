@@ -58,7 +58,7 @@ public class UserAdmFrg extends Fragment {
 
     private void updateUser(final DBHelper db, final String id) {
         LayoutInflater linf = LayoutInflater.from(getContext());
-        final View inflator = linf.inflate(R.layout.edit_dialog, null);
+        final View inflator = linf.inflate(R.layout.user_dialog, null);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("User edit");

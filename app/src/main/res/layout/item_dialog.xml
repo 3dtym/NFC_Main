@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_marginTop="34dp"
+            android:id="@+id/name"
+            android:hint="nazov" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:layout_marginTop="21dp" android:id="@+id/price" android:layout_below="@+id/name"
+            android:layout_alignStart="@+id/name"
+            android:hint="cena"/>
+    <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:layout_marginTop="26dp"
+            android:entries="@array/ProductTypes" android:layout_below="@+id/price"
+            android:layout_alignStart="@+id/price" android:layout_alignEnd="@+id/price"/>
+</RelativeLayout>

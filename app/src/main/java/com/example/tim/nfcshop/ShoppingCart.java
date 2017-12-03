@@ -2,7 +2,6 @@ package com.example.tim.nfcshop;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,17 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -81,7 +73,7 @@ public class ShoppingCart extends Activity{
             price = data.getCena();
 
             DecimalFormat twoDForm = new DecimalFormat("#.##");
-            double balance = Double.valueOf(twoDForm.format(user.getKredit()-data.getCena()));
+            double balance = Double.valueOf(twoDForm.format(user.getKredit()-data.getCena())); // Timovi to tu spadne java.lang.NumberFormatException: For input string: "4,01"
 
             if( balance < 0.0) {
                 //Toast.makeText(ShoppingCart.this,"Not enough credit!",Toast.LENGTH_LONG).show();
