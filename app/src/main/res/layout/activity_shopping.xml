@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/Indigo">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/Teal"
-        android:padding="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/Teal"
+            android:padding="5dp">
 
         <TextView
-            android:id="@+id/usename"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:textColor="@color/White"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:id="@+id/usename"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:textColor="@color/White"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
         <TextView
-            android:id="@+id/credit"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:gravity="right"
-            android:textColor="@color/White"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:id="@+id/credit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="right"
+                android:textColor="@color/White"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
         <ImageView
-            android:id="@+id/logout"
-            android:layout_width="60dp"
-            android:layout_height="25dp"
-            app:srcCompat="@drawable/logout" />
+                android:id="@+id/logout"
+                android:layout_width="60dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/logout"/>
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:scrollbars="vertical"
-        >
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+    >
 
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>
