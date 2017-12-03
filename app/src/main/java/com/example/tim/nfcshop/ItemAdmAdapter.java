@@ -2,7 +2,6 @@ package com.example.tim.nfcshop;
 
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,10 +56,7 @@ public class ItemAdmAdapter extends RecyclerView.Adapter<ItemAdmAdapter.ViewHold
     }
 
     public void removeItem(int position) {
-        Log.d("size",String.valueOf(data.size()));
-        Log.d("pos",String.valueOf(position));
         Product pr = data.get(position);
-        Log.d("pos",String.valueOf(pr.getProduktId()));
         db.deleteItem(pr.getProduktId());
         data.remove(position);
         notifyItemRemoved(position);

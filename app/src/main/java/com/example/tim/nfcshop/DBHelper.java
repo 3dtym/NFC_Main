@@ -233,12 +233,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void deleteItem(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + PRODUCTS_TABLE_NAME + " WHERE "
-                + PRODUCTS_COLUMN_ID + " = " + id;
-        db.execSQL(query);
-    }
 
     public User getUserByNfc(String nfc){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -253,6 +247,37 @@ public class DBHelper extends SQLiteOpenHelper {
         data.close();
         return user;
     }
+
+    public void updateProductName(int id, String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + PRODUCTS_TABLE_NAME + " SET " + PRODUCTS_COLUMN_NAME +
+                " = '" + name + "' WHERE " + PRODUCTS_COLUMN_ID + " = " + id;
+        db.execSQL(query);
+    }
+
+    public void updateProductPrice(int id, Double price){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + PRODUCTS_TABLE_NAME + " SET " + PRODUCTS_COLUMN_PRICE +
+                " = '" + price + "' WHERE " + PRODUCTS_COLUMN_ID +" = " + id;
+        db.execSQL(query);
+    }
+
+    public void updateProduct(int id, String name, Double price, int picture){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + PRODUCTS_TABLE_NAME + " SET " + PRODUCTS_COLUMN_NAME +
+                " = '" + name + "', " + PRODUCTS_COLUMN_PRICE + " = " + price + ", " +
+                PRODUCTS_COLUMN_PICTURE + " = " + picture + " WHERE " + PRODUCTS_COLUMN_ID + " = " + id;
+        Log.d("query",query);
+        db.execSQL(query);
+    }
+
+    public void deleteItem(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + PRODUCTS_TABLE_NAME + " WHERE "
+                + PRODUCTS_COLUMN_ID + " = " + id;
+        db.execSQL(query);
+    }
+
 
     public ArrayList<Product> getAllProducts(){
         SQLiteDatabase db = this.getWritableDatabase();

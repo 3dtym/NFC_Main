@@ -52,7 +52,7 @@ public class ItemAdmFrg extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initDialog(db,0,0);
+                initDialog(db,null,0);
             }
         });
         recyclerView = view.findViewById(R.id.recycler_view);
@@ -80,9 +80,12 @@ public class ItemAdmFrg extends Fragment {
                 if (direction == ItemTouchHelper.LEFT) {
                     adapter.removeItem(position);
                 } else {
-                    removeView();
+//                    removeView();
                     edit_position = position;
+                    Log.d("edit",String.valueOf(products.get(position).produktId));
 
+                    initDialog(db,products.get(position),1);
+                    adapter.notifyDataSetChanged();
 //                  Treba dorobit dialog na Set Item.
 
                 }
@@ -128,7 +131,7 @@ public class ItemAdmFrg extends Fragment {
         }
     }
 
-    private void initDialog(final DBHelper db, final int id, final int mod) {
+    private void initDialog(final DBHelper db, final Product pr, final int mod) {
 
         LayoutInflater linf = LayoutInflater.from(getContext());
         final View inflator = linf.inflate(R.layout.item_dialog, null);
@@ -152,21 +155,28 @@ public class ItemAdmFrg extends Fragment {
                             int picture = Integer.valueOf(spinner.getSelectedItem().toString());
                             adapter.addItem(new Product(name, credit, picture));
                         }else
-                            Toast.makeText(getContext(), "Obe polia musia byt vyplnene", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Vsetky polia musia byt vyplnene", Toast.LENGTH_SHORT).show();
                     }
                     case 1:{
                         if (input2.length() != 0) {
-                            double credit = Double.valueOf(input2.getText().toString());
-//                            db.updateCreditUser(id, credit);
-                        } else if (input.length() != 0) {
+                            double price = Double.valueOf(input2.getText().toString());
+                            db.updateProductPrice(pr.getProduktId(),price);
+                            products.set(edit_position,new Product(pr.getNazov(),price,pr.getPicture()));
+                            adapter.notifyDataSetChanged();
+                        } if (input.length() != 0) {
                             String name = input.getText().toString();
-//                            db.updateNameUser(id, name);
-                        } else if (input.length() != 0 && input2.length() != 0) {
+                            db.updateProductName(pr.getProduktId(), name);
+                            products.set(edit_position,new Product(name,pr.getCena(),pr.getPicture()));
+                            adapter.notifyDataSetChanged();
+                        } if (input.length() != 0 && input2.length() != 0) {
                             String name = input.getText().toString();
-                            double credit = Double.valueOf(input2.getText().toString());
-//                            db.updateUser(id, name, credit);
-                        } else
-                            Toast.makeText(getContext(), "Obe polia musia byt vyplnene", Toast.LENGTH_SHORT).show();
+                            double price = Double.valueOf(input2.getText().toString());
+                            int picture = Integer.valueOf(spinner.getSelectedItem().toString());
+                            db.updateProduct(pr.getProduktId(), name, price, picture);
+                            products.set(edit_position,new Product(name,price,picture));
+                            adapter.notifyDataSetChanged();
+                        } if (input.length() == 0 && input2.length() == 0)
+                            Toast.makeText(getContext(), "Vypln este aspon jedno pole", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
