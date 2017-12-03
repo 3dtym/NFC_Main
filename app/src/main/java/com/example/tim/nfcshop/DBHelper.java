@@ -73,6 +73,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    public boolean createProductDB(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PRODUCTS_COLUMN_NAME, product.getNazov());
+        contentValues.put(PRODUCTS_COLUMN_PRICE, product.getCena());
+        contentValues.put(PRODUCTS_COLUMN_PICTURE, product.getPicture());
+
+
+        Log.d(TAG, "addData: Adding " + product.getNazov() + "with credit " + product.getCena() + " to " + PRODUCTS_TABLE_NAME);
+
+        long result = db.insert(PRODUCTS_TABLE_NAME, null, contentValues);
+
+        //if date as inserted incorrectly it will return -1
+        return result != -1;
+    }
+
     /**
      * Returns all the data from database
      * @return
@@ -233,20 +249,19 @@ public class DBHelper extends SQLiteOpenHelper {
         return user;
     }
 
-    public List<Product> getAllProducts(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT *" + " FROM " + PRODUCTS_TABLE_NAME ;
-        db.execSQL(query);
-        List<Product> products = new LinkedList<>();
+    public ArrayList<Product> getAllProducts(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + PRODUCTS_TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
+        ArrayList<Product> products = new ArrayList<>();
         Product product=null;
         while(data.moveToNext()){
-            int id=Integer.valueOf(data.getString(0));
-            product = new Product(data.getString(1), Double.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)));
-            product.setProduktId(id);
+            product = new Product(Integer.valueOf(data.getString(0)), data.getString(1), Double.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)));
             products.add(product);
+            product = null;
         }
-        data.close();
+
         return products;
     }
+
 }

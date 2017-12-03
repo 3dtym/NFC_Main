@@ -11,7 +11,8 @@ public class Product {
     double cena;
     int picture;
 
-    public Product(String nazov, double cena, int picture) {
+    public Product(int produktId,String nazov, double cena, int picture) {
+        this.produktId =produktId;
         this.nazov = nazov;
         this.cena = cena;
         this.picture = picture;
@@ -40,7 +41,7 @@ public class Product {
         return cena;
     }
 
-    public void setCena(int cena) {
+    public void setCena(double cena) {
         this.cena = cena;
     }
 
