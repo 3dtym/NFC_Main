@@ -12,8 +12,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -232,6 +230,13 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + CUSTOMERS_TABLE_NAME + " WHERE "
                 + CUSTOMERS_COLUMN_CARD_ID + " = '" + id + "'";
+        db.execSQL(query);
+    }
+
+    public void deleteItem(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + PRODUCTS_TABLE_NAME + " WHERE "
+                + PRODUCTS_COLUMN_ID + " = " + id;
         db.execSQL(query);
     }
 

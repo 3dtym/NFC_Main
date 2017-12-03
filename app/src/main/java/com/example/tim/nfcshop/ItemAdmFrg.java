@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class ItemAdmFrg extends Fragment {
     private int edit_position;
     private Paint p = new Paint();
     RecyclerView recyclerView;
+    DBHelper db;
 
     @Nullable
     @Override
@@ -42,7 +44,7 @@ public class ItemAdmFrg extends Fragment {
     }
 
     private void initViews(View view) {
-        final DBHelper db = new DBHelper(getContext());
+        db = new DBHelper(getContext());
 
         products = db.getAllProducts();
 
@@ -73,6 +75,7 @@ public class ItemAdmFrg extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
+                Log.d("onwiped",String.valueOf(position));
 
                 if (direction == ItemTouchHelper.LEFT) {
                     adapter.removeItem(position);
