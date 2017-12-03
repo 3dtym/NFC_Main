@@ -41,7 +41,7 @@ public class ItemAdmAdapter extends RecyclerView.Adapter<ItemAdmAdapter.ViewHold
                 holder.foodImage.setImageResource(R.drawable.food);
                 break;
         }
-        holder.buyImage.setImageResource(R.drawable.shoppingcart);
+//        holder.buyImage.setImageResource(R.drawable.shoppingcart);
     }
 
     @Override
@@ -67,14 +67,14 @@ public class ItemAdmAdapter extends RecyclerView.Adapter<ItemAdmAdapter.ViewHold
         private TextView foodName;
         private TextView foodPrice;
         private ImageView foodImage;
-        private ImageView buyImage;
+//        private ImageView buyImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
             foodName = itemView.findViewById(R.id.foodName);
             foodPrice = itemView.findViewById(R.id.foodPrice);
             foodImage = itemView.findViewById(R.id.imageView);
-            buyImage = itemView.findViewById(R.id.buyIcon);
+//            buyImage = itemView.findViewById(R.id.buyIcon);
         }
     }
 }
