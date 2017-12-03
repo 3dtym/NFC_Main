@@ -80,14 +80,11 @@ public class ItemAdmFrg extends Fragment {
                 if (direction == ItemTouchHelper.LEFT) {
                     adapter.removeItem(position);
                 } else {
-//                    removeView();
                     edit_position = position;
                     Log.d("edit",String.valueOf(products.get(position).produktId));
 
                     initDialog(db,products.get(position),1);
                     adapter.notifyDataSetChanged();
-//                  Treba dorobit dialog na Set Item.
-
                 }
             }
 
@@ -147,6 +144,7 @@ public class ItemAdmFrg extends Fragment {
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Log.d("mod",String.valueOf(mod));
                 switch (mod) {
                     case 0: {
                         if (input.length() != 0 && input2.length() != 0) {
@@ -156,6 +154,7 @@ public class ItemAdmFrg extends Fragment {
                             adapter.addItem(new Product(name, credit, picture));
                         }else
                             Toast.makeText(getContext(), "Vsetky polia musia byt vyplnene", Toast.LENGTH_SHORT).show();
+                        break;
                     }
                     case 1:{
                         if (input2.length() != 0) {
@@ -177,6 +176,7 @@ public class ItemAdmFrg extends Fragment {
                             adapter.notifyDataSetChanged();
                         } if (input.length() == 0 && input2.length() == 0)
                             Toast.makeText(getContext(), "Vypln este aspon jedno pole", Toast.LENGTH_SHORT).show();
+                        break;
                     }
                 }
             }

@@ -33,6 +33,7 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        final String nfc_id = getIntent().getStringExtra("NFC_ID");
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -52,6 +53,7 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent2 = new Intent(getApplicationContext(), ShoppingCart.class);
+                intent2.putExtra("NFC_ID", nfc_id);
                 startActivity(intent2);
             }
         });
