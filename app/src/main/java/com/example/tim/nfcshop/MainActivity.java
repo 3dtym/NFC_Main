@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = input.getText().toString();
-                db.createUserDB(new User(name,10.0,0,id));
+                db.createUserDB(new User(name,10.0,1,id));
             }
         });
         builder.setNegativeButton("canel", new DialogInterface.OnClickListener() {

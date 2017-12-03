@@ -16,9 +16,10 @@ import java.util.ArrayList;
 public class UserAdmFrg extends Fragment {
 
     private static final String TAG = "ListDataActivity";
-
+    ArrayList<String> listData;
     private ListView mListView;
-
+    private int index;
+    private ArrayAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,14 +37,14 @@ public class UserAdmFrg extends Fragment {
         final DBHelper db = new DBHelper(getContext());
         //get the data and append to a list
         final ArrayList<User> users = db.getAllUsers();
-        ArrayList<String> listData = new ArrayList<>();
+        listData = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
             //get the value from the database in column 1
             //then add it to the ArrayList
-            listData.add("ID: " + users.get(i).getCardId() + "    Meno: " + users.get(i).getMeno() + "     Kredit: " + users.get(i).getKredit());
+            listData.add(users.get(i).getCardId() + "           " + users.get(i).getMeno() + "          " + users.get(i).getKredit()+ "€");
         }
         //create the list adapter and set the adapter
-        final ListAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listData);
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listData);
         mListView.setAdapter(adapter);
 
         //set an onItemClickListener to the ListView
@@ -51,12 +52,13 @@ public class UserAdmFrg extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 User user = users.get(i);
-                updateUser(db, user.getCardId());
+                index = i;
+                updateUser(db, user);
             }
         });
     }
 
-    private void updateUser(final DBHelper db, final String id) {
+    private void updateUser(final DBHelper db, final User user) {
         LayoutInflater linf = LayoutInflater.from(getContext());
         final View inflator = linf.inflate(R.layout.user_dialog, null);
 
@@ -72,14 +74,20 @@ public class UserAdmFrg extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 if (input2.length() != 0) {
                     double credit = Double.valueOf(input2.getText().toString());
-                    db.updateCreditUser(id,credit);
+                    db.updateCreditUser(user.getCardId(),credit);
+                    listData.set(index,user.getCardId() + "           " + user.getMeno() + "          " + credit+ "€");
+                    adapter.notifyDataSetChanged();
                 }if (input.length() != 0){
                     String name = input.getText().toString();
-                    db.updateNameUser(id,name);
+                    db.updateNameUser(user.getCardId(),name);
+                    listData.set(index,user.getCardId() + "           " + name + "          " + user.getKredit()+ "€");
+                    adapter.notifyDataSetChanged();
                 }if (input.length() != 0 && input2.length() != 0){
                     String name = input.getText().toString();
                     double credit = Double.valueOf(input2.getText().toString());
-                    db.updateUser(id, name, credit);
+                    db.updateUser(user.getCardId(), name, credit);
+                    listData.set(index,user.getCardId() + "           " + name + "          " + credit+ "€");
+                    adapter.notifyDataSetChanged();
                 }if (input.length() == 0 && input2.length() == 0)
                     Toast.makeText(getContext(),"Obe polia musia byt vyplnene", Toast.LENGTH_SHORT).show();
 
@@ -88,7 +96,7 @@ public class UserAdmFrg extends Fragment {
         builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                db.deleteUser(id);
+                db.deleteUser(user.getCardId());
             }
         });
         AlertDialog ad = builder.create();
