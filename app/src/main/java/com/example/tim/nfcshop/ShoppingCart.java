@@ -33,7 +33,7 @@ public class ShoppingCart extends Activity{
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate: ");
         String nfc_id = getIntent().getStringExtra("NFC_ID");
-        Log.i(TAG, "Got nfc ID");
+        Log.i(TAG, "Got nfc ID" + nfc_id);
         dbHelper = new DBHelper(ShoppingCart.this);
         Log.i(TAG, "DBHelper init");
         user = dbHelper.getUserByNfc(nfc_id);

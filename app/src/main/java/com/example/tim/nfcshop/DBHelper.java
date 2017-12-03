@@ -238,7 +238,6 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT *" + " FROM " + CUSTOMERS_TABLE_NAME +
                 " WHERE " + CUSTOMERS_COLUMN_CARD_ID + " = '" + nfc + "'";
-        db.execSQL(query);
         Cursor data = db.rawQuery(query, null);
         User user=null;
         while(data.moveToNext()){
