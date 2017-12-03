@@ -73,14 +73,14 @@ public class UserAdmFrg extends Fragment {
                 if (input2.length() != 0) {
                     double credit = Double.valueOf(input2.getText().toString());
                     db.updateCreditUser(id,credit);
-                }else if (input.length() != 0){
+                }if (input.length() != 0){
                     String name = input.getText().toString();
                     db.updateNameUser(id,name);
-                }else if (input.length() != 0 && input2.length() != 0){
+                }if (input.length() != 0 && input2.length() != 0){
                     String name = input.getText().toString();
                     double credit = Double.valueOf(input2.getText().toString());
                     db.updateUser(id, name, credit);
-                }else
+                }if (input.length() == 0 && input2.length() == 0)
                     Toast.makeText(getContext(),"Obe polia musia byt vyplnene", Toast.LENGTH_SHORT).show();
 
             }
