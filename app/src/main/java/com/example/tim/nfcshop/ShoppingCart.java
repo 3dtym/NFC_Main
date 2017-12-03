@@ -31,6 +31,7 @@ public class ShoppingCart extends Activity{
     private List<Product> products;
     private Double price;
     private TextView creditView;
+    private DBHelper dbHelper;
 
     private static final String TAG = "TAG";
 
@@ -38,31 +39,24 @@ public class ShoppingCart extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        products = new LinkedList<>();
-        products.add(new Product("Water",0.99,1));
-        products.add(new Product("Snickers",1.25,2));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-        products.add(new Product("Hot-dog",1.50,0));
-
-
-        user = new User("Test",5.0,0,"012165464");
+        Log.i(TAG, "onCreate: ");
+        String nfc_id = getIntent().getStringExtra("NFC_ID");
+        Log.i(TAG, "Got nfc ID");
+        dbHelper = new DBHelper(ShoppingCart.this);
+        Log.i(TAG, "DBHelper init");
+        user = dbHelper.getUserByNfc(nfc_id);
+        Log.i(TAG, "User from db");
+        if(user == null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCart.this);
+            builder.setMessage("Unknown user!").setPositiveButton("Ok", logoutDialog).show();
+        }
+        Log.i(TAG, "user not empty:"+user.getMeno());
+        products = dbHelper.getAllProducts();
+        Log.i(TAG, "products loaded");
 
         setContentView(R.layout.activity_shopping);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -140,7 +134,7 @@ public class ShoppingCart extends Activity{
                     DecimalFormat twoDForm = new DecimalFormat("#.##");
                     user.setKredit(Double.valueOf(twoDForm.format(user.getKredit()-price)));
                     creditView.setText(Double.toString(user.getKredit()) + "€");
-                    //todo:update database
+                    dbHelper.updateCreditUser(user.getCardId(),user.getKredit());
                     break;
 
                 case DialogInterface.BUTTON_NEGATIVE:

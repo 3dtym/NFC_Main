@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), ShoppingCart.class);
+                        intent.putExtra("NFC_ID", "58c283a1600");
                         startActivity(intent);
 
                     }
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent2);
         }else {
             Intent intent2 = new Intent(getApplicationContext(), ShoppingCart.class);
+            intent2.putExtra("NFC_ID", id);
             startActivity(intent2);
         }
 

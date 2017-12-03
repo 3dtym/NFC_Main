@@ -12,6 +12,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -113,6 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
         while(data.moveToNext()) {
              name = data.getString(0);
         }
+        data.close();
         return name;
     }
 
@@ -128,7 +131,7 @@ public class DBHelper extends SQLiteOpenHelper {
             users.add(user);
             user = null;
         }
-
+        data.close();
         return users;
     }
 
@@ -144,7 +147,7 @@ public class DBHelper extends SQLiteOpenHelper {
             users.add(user);
             user = null;
         }
-
+        data.close();
         return users;
     }
 
@@ -214,5 +217,36 @@ public class DBHelper extends SQLiteOpenHelper {
         String query = "DELETE FROM " + CUSTOMERS_TABLE_NAME + " WHERE "
                 + CUSTOMERS_COLUMN_CARD_ID + " = '" + id + "'";
         db.execSQL(query);
+    }
+
+    public User getUserByNfc(String nfc){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT *" + " FROM " + CUSTOMERS_TABLE_NAME +
+                " WHERE " + CUSTOMERS_COLUMN_CARD_ID + " = '" + nfc + "'";
+        db.execSQL(query);
+        Cursor data = db.rawQuery(query, null);
+        User user=null;
+        while(data.moveToNext()){
+            user = new User(Integer.valueOf(data.getString(0)), data.getString(1), Double.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)), data.getString(4));
+        }
+        data.close();
+        return user;
+    }
+
+    public List<Product> getAllProducts(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT *" + " FROM " + PRODUCTS_TABLE_NAME ;
+        db.execSQL(query);
+        List<Product> products = new LinkedList<>();
+        Cursor data = db.rawQuery(query, null);
+        Product product=null;
+        while(data.moveToNext()){
+            int id=Integer.valueOf(data.getString(0));
+            product = new Product(data.getString(1), Double.valueOf(data.getString(2)), Integer.valueOf(data.getString(3)));
+            product.setProduktId(id);
+            products.add(product);
+        }
+        data.close();
+        return products;
     }
 }
