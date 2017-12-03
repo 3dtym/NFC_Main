@@ -54,11 +54,9 @@ public class ItemAdmFrg extends Fragment {
             }
         });
         recyclerView = view.findViewById(R.id.recycler_view);
-//        recyclerView.setHasFixedSize(true);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ItemAdmAdapter(products);
+        adapter = new ItemAdmAdapter(products,db);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         initSwipe();
@@ -149,9 +147,7 @@ public class ItemAdmFrg extends Fragment {
                             String name = input.getText().toString();
                             double credit = Double.valueOf(input2.getText().toString());
                             int picture = Integer.valueOf(spinner.getSelectedItem().toString());
-                            Product pr = new Product(name, credit, picture);
-                            db.createProductDB(pr);
-                            adapter.addItem(pr);
+                            adapter.addItem(new Product(name, credit, picture));
                         }else
                             Toast.makeText(getContext(), "Obe polia musia byt vyplnene", Toast.LENGTH_SHORT).show();
                     }

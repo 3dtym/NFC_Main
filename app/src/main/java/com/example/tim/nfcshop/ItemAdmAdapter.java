@@ -13,7 +13,9 @@ import java.util.List;
 
 public class ItemAdmAdapter extends RecyclerView.Adapter<ItemAdmAdapter.ViewHolder> {
     private List<Product> data;
-    public ItemAdmAdapter(List<Product> data) {
+    private DBHelper db;
+    public ItemAdmAdapter(List<Product> data, DBHelper db) {
+        this.db = db;
         this.data = data;
     }
 
@@ -49,6 +51,7 @@ public class ItemAdmAdapter extends RecyclerView.Adapter<ItemAdmAdapter.ViewHold
 
     public void addItem(Product item) {
         data.add(item);
+        db.createProductDB(item);
         notifyItemInserted(data.size());
     }
 
