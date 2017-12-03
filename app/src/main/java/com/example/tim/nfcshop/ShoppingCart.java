@@ -14,8 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
-
+import java.util.Locale;
 
 
 public class ShoppingCart extends Activity{
@@ -72,7 +73,7 @@ public class ShoppingCart extends Activity{
         public void onSelected(Product data) {
             price = data.getCena();
 
-            DecimalFormat twoDForm = new DecimalFormat("#.##");
+            DecimalFormat twoDForm = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.ENGLISH));
             double balance = Double.valueOf(twoDForm.format(user.getKredit()-data.getCena())); // Timovi to tu spadne java.lang.NumberFormatException: For input string: "4,01"
 
             if( balance < 0.0) {
@@ -123,7 +124,7 @@ public class ShoppingCart extends Activity{
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
-                    DecimalFormat twoDForm = new DecimalFormat("#.##");
+                    DecimalFormat twoDForm = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.ENGLISH));
                     user.setKredit(Double.valueOf(twoDForm.format(user.getKredit()-price)));
                     creditView.setText(Double.toString(user.getKredit()) + "€");
                     dbHelper.updateCreditUser(user.getCardId(),user.getKredit());
