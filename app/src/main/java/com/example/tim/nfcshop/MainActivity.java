@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(db.isAdmin(id) == 1){
             Intent intent2 = new Intent(getApplicationContext(), AdminActivity.class);
+            intent2.putExtra("NFC_ID", id);
             startActivity(intent2);
         }else {
             Intent intent2 = new Intent(getApplicationContext(), ShoppingCart.class);
